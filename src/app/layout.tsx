@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { TRPCProvider } from "@/components/TRPCProvider";
+import { AppSidebar } from "@/components/ui/app-sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,6 +21,9 @@ export const metadata: Metadata = {
   description: "Trust me, I'm a banker",
 };
 
+const SIDEBAR_WIDTH = "16rem";
+const SIDEBAR_WIDTH_MOBILE = "18rem";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -27,7 +32,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <TRPCProvider>{children}</TRPCProvider>
+        <TRPCProvider>
+          <SidebarProvider
+            style={
+              {
+                "--sidebar-width": SIDEBAR_WIDTH,
+                "--sidebar-width-mobile": SIDEBAR_WIDTH_MOBILE,
+              } as React.CSSProperties
+            }
+          >
+            <AppSidebar />
+            <SidebarTrigger />
+            {children}
+          </SidebarProvider>
+        </TRPCProvider>
       </body>
     </html>
   );

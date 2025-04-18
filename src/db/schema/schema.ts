@@ -1,9 +1,17 @@
+import { createId } from "@paralleldrive/cuid2";
 import { integer, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 // Users
 export const users = sqliteTable("users", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  name: text("name").notNull(),
+  cuid: text("cuid")
+    .notNull()
+    .unique()
+    .$default(() => createId()),
+  username: text("username").notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  avatar: text("avatar"),
   email: text("email").notNull().unique(),
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
@@ -16,9 +24,9 @@ export const users = sqliteTable("users", {
 // Accounts
 export const accounts = sqliteTable("accounts", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: integer("user_id")
+  userCuid: text("user_cuid")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" })
+    .references(() => users.cuid, { onDelete: "cascade" })
     .unique(), // Ensures one account per user
   balance: real("balance").notNull().default(0), // Current account balance
   createdAt: integer("created_at", { mode: "timestamp" })
@@ -32,9 +40,9 @@ export const accounts = sqliteTable("accounts", {
 // Expenses
 export const expenses = sqliteTable("expenses", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: integer("user_id")
+  userCuid: text("user_cuid")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => users.cuid, { onDelete: "cascade" }),
   accountId: integer("account_id")
     .notNull()
     .references(() => accounts.id, { onDelete: "cascade" }),
@@ -57,9 +65,9 @@ export const expenses = sqliteTable("expenses", {
 // Incomes
 export const incomes = sqliteTable("incomes", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  userId: integer("user_id")
+  userCuid: text("user_cuid")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => users.cuid, { onDelete: "cascade" }),
   accountId: integer("account_id")
     .notNull()
     .references(() => accounts.id, { onDelete: "cascade" }),

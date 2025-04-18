@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "d7d088e6-3a15-42a2-b7f4-c05443c1a777",
+  "id": "7208413a-6c49-44c8-a5e5-2f5630213fe0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "accounts": {
@@ -14,9 +14,9 @@
           "notNull": true,
           "autoincrement": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "integer",
+        "user_cuid": {
+          "name": "user_cuid",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -45,24 +45,24 @@
         }
       },
       "indexes": {
-        "accounts_user_id_unique": {
-          "name": "accounts_user_id_unique",
+        "accounts_user_cuid_unique": {
+          "name": "accounts_user_cuid_unique",
           "columns": [
-            "user_id"
+            "user_cuid"
           ],
           "isUnique": true
         }
       },
       "foreignKeys": {
-        "accounts_user_id_users_id_fk": {
-          "name": "accounts_user_id_users_id_fk",
+        "accounts_user_cuid_users_cuid_fk": {
+          "name": "accounts_user_cuid_users_cuid_fk",
           "tableFrom": "accounts",
           "tableTo": "users",
           "columnsFrom": [
-            "user_id"
+            "user_cuid"
           ],
           "columnsTo": [
-            "id"
+            "cuid"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -82,9 +82,9 @@
           "notNull": true,
           "autoincrement": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "integer",
+        "user_cuid": {
+          "name": "user_cuid",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -156,15 +156,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "expenses_user_id_users_id_fk": {
-          "name": "expenses_user_id_users_id_fk",
+        "expenses_user_cuid_users_cuid_fk": {
+          "name": "expenses_user_cuid_users_cuid_fk",
           "tableFrom": "expenses",
           "tableTo": "users",
           "columnsFrom": [
-            "user_id"
+            "user_cuid"
           ],
           "columnsTo": [
-            "id"
+            "cuid"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -197,9 +197,9 @@
           "notNull": true,
           "autoincrement": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "integer",
+        "user_cuid": {
+          "name": "user_cuid",
+          "type": "text",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
@@ -271,15 +271,15 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "incomes_user_id_users_id_fk": {
-          "name": "incomes_user_id_users_id_fk",
+        "incomes_user_cuid_users_cuid_fk": {
+          "name": "incomes_user_cuid_users_cuid_fk",
           "tableFrom": "incomes",
           "tableTo": "users",
           "columnsFrom": [
-            "user_id"
+            "user_cuid"
           ],
           "columnsTo": [
-            "id"
+            "cuid"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -312,11 +312,39 @@
           "notNull": true,
           "autoincrement": true
         },
-        "name": {
-          "name": "name",
+        "cuid": {
+          "name": "cuid",
           "type": "text",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "username": {
+          "name": "username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "avatar": {
+          "name": "avatar",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "email": {
@@ -342,6 +370,13 @@
         }
       },
       "indexes": {
+        "users_cuid_unique": {
+          "name": "users_cuid_unique",
+          "columns": [
+            "cuid"
+          ],
+          "isUnique": true
+        },
         "users_email_unique": {
           "name": "users_email_unique",
           "columns": [

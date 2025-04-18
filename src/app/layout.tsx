@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 import { TRPCProvider } from "@/components/TRPCProvider";
+import User from "@/components/User";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
@@ -43,6 +44,7 @@ export default function RootLayout({
           >
             <AppSidebar />
             <SidebarTrigger />
+            <User />
             {children}
           </SidebarProvider>
         </TRPCProvider>
